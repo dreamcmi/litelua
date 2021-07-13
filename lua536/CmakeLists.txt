@@ -2,21 +2,20 @@ cmake_minimum_required(VERSION 3.6)
 
 project(lua536)
 
-AUX_SOURCE_DIRECTORY(src ALL_SRC)
-INCLUDE_DIRECTORIES(inc)
-
-# remove lua.c & luac.c
-SET(LIB_SRC ${ALL_SRC})
-LIST(REMOVE_ITEM LIB_SRC lua.c luac.c)
+aux_source_directory(src LIB_SRC)
+aux_source_directory(lua LUA_SRC)
+include_directories(inc)
 
 # lib
-ADD_LIBRARY(lua STATIC ${LIB_SRC})
+add_library(lua STATIC ${LIB_SRC})
+add_library(lua-shared SHARED ${LIB_SRC})
+set_target_properties(lua-shared PROPERTIES OUTPUT_NAME lua)
 
 # lua
-ADD_EXECUTABLE(luaexec src/lua.c)
+ADD_EXECUTABLE(luaexec lua/lua.c)
 target_link_libraries(luaexec lua)
 set_target_properties(luaexec PROPERTIES OUTPUT_NAME lua)
 
 # luac
-add_executable(luac src/luac.c)
+add_executable(luac lua/luac.c)
 target_link_libraries(luac lua)
