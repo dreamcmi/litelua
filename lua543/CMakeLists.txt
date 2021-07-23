@@ -9,7 +9,7 @@ include_directories(inc)
 # lib
 add_library(lua STATIC ${LIB_SRC})
 add_library(lua-shared SHARED ${LIB_SRC})
-set_target_properties(lua-shared PROPERTIES OUTPUT_NAME lua)
+# set_target_properties(lua-shared PROPERTIES OUTPUT_NAME lua)
 
 # lua
 add_executable(luaexec lua/lua.c)
